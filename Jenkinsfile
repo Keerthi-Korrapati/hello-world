@@ -1,19 +1,20 @@
 pipeline {
     agent any
     
-    environment {
-        PATH = "/opt/maven/bin:$PATH"
+    tools{
+        maven 'maven'
     }
 
     stages {
-        stage('clone-code') {
-            steps {
-                git branch: 'master', url: 'https://github.com/Keerthi-Korrapati/hello-world.git'
-            }
-        }
         stage('Build-code') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean package'
+            }
+            post{
+                success{
+                    echo 'Archiving the Artifacts'
+                    archiveArtifacts artifacts: '**/*.war'
+                }
             }
         }
         stage('Deploy') {
