@@ -19,7 +19,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 sshagent(['deploy-user1']) {
-                    sh "scp webapp/target/wepapp.war -o StrictHostKeyChecking=no ec2-user@107.23.198.226:/opt/tomcat/webapps"
+                    sh "ssh-keyscan -H 54.242.118.220 >> ~/.ssh/known_hosts"
+                    sh "scp webapp/target/wepapp.war -o StrictHostKeyChecking=no ec2-user@54.242.118.220:/opt/tomcat/webapps"
     
                 }
             }
