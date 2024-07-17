@@ -24,7 +24,7 @@ pipeline {
             }
 
         }
-        stage ('Jar Publish'){
+        stage ('Publish war'){
             steps {
             script {
                     echo '<--------------- Jar Publish Started --------------->'
@@ -34,7 +34,7 @@ pipeline {
                           "files": [
                             {
                               "pattern": "target/*.war",
-                              "target": "mvn-libs-release-local/",
+                              "target": "mvn-libs-snapshot-local/",
                               "flat": "false",
                               "props" : "${properties}"
                             }
