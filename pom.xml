@@ -23,11 +23,22 @@
 
   <distributionManagement>
     <site>
-      <id>site-server</id>
-      <name>Test Project Site</name>
-      <url>file:///tmp/maven-project-site</url>
+        <id>site-server</id>
+        <name>Test Project Site</name>
+        <url>file:///tmp/maven-project-site</url>
     </site>
-  </distributionManagement>
+    <repository>
+        <id>site-server</id>
+        <name>Test Project Repository</name>
+        <url>file:///tmp/maven-project-site/releases</url>
+    </repository>
+    <snapshotRepository>
+        <id>site-server-snapshots</id>
+        <name>Test Project Snapshot Repository</name>
+        <url>file:///tmp/maven-project-site/snapshots</url>
+    </snapshotRepository>
+</distributionManagement>
+
 
   <build>
     <plugins>
