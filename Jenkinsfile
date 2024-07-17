@@ -12,11 +12,16 @@ pipeline {
                 echo 'Building the project...'
                 sh 'mvn clean package'
             }
-        }
-        stage('Push to Repository') {
-            steps {
-                sh 'mvn deploy'
+            post{
+                success{
+                    echo 'Archiving the Artifacts'
+                    archiveArtifacts artifacts: '**/*.war'
+                }
+                failure {
+                    echo 'Archiving the Artifacts failed.'
+                }
             }
+
         }
         stage ('Deploy to tomcat server') {
             steps{
