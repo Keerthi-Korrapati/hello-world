@@ -1,29 +1,19 @@
 pipeline {
     agent any
-    
-    tools{
-        maven 'maven'
+
+    environment {
+        PATH = "/opt/maven/bin:$PATH"
     }
 
     stages {
         stage('Build-code') {
             steps {
-                sh 'mvn clean package'
-            }
-            post{
-                success{
-                    echo 'Archiving the Artifacts'
-                    archiveArtifacts artifacts: '**/*.war'
-                }
+                sh 'mvn clean install'
             }
         }
-        stage('Deploy') {
-            steps {
-                sshagent(['deploy-user1']) {
-                    sh "ssh-keyscan -H 54.242.118.220 >> ~/.ssh/known_hosts"
-                    sh "scp webapp/target/wepapp.war -o StrictHostKeyChecking=no ec2-user@54.242.118.220:/opt/tomcat/webapps"
-    
-                }
+        stage ('Deploy to tomcat server') {
+            steps{
+                deploy adapters: [tomcat9(credentialsId: 'tomcat-deployer', path: '', url: 'http://54.165.72.144:8080/')], contextPath: null, war: '**/*.war'
             }
         }
         
