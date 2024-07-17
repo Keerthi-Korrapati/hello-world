@@ -10,7 +10,12 @@ pipeline {
         stage('Build-code') {
             steps {
                 echo 'Building the project...'
-                sh 'mvn clean install'
+                sh 'mvn clean package'
+            }
+        }
+        stage('Push to Repository') {
+            steps {
+                sh 'mvn deploy'
             }
         }
         stage ('Deploy to tomcat server') {
