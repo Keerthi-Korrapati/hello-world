@@ -24,7 +24,7 @@ pipeline {
             }
 
         }
-        stage ('Publish war'){
+        stage ('Publish war to repository'){
             steps {
             script {
                     echo '<--------------- Jar Publish Started --------------->'
